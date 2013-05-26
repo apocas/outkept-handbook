@@ -1,0 +1,16 @@
+{
+  "author": "Outkept",
+  "name": "Outkept documentation",
+  "description": "Outkept documentation",
+  "dependencies": {
+    "http-server": "~0.5.1",
+    "blacksmith": "~1.1.3"
+  },
+  "scripts": {
+    "start": "node ./bin/server",
+    "postinstall": "blacksmith"
+  },
+  "engines": {
+    "node": "0.8.x"
+  }
+}

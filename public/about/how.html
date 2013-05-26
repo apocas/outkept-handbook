@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<head>
+  <base href="http://outke.pt/documentation/" target="_blank">
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta charset="utf-8">
+
+  <title>Outkept</title>
+
+  <meta name="description" content="Outkept" />
+  <meta name="author" content="Outkept" />
+  <meta name="viewport" content="width=device-width" />
+
+  <link rel="stylesheet" href="css/base.dev.css">
+  <link rel="stylesheet" href="css/github.min.css">
+  <link rel="stylesheet" href="css/custom.css">
+  <link rel="icon" type="image/png" href="img/favicon.ico">  
+
+  <script src="js/highlight.min.js"></script>
+  <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.3.min.js"></script>
+  <script src="js/slugify.js"></script>
+  <script>
+    hljs.tabReplace = '    ';
+    hljs.initHighlightingOnLoad();
+  </script>
+
+</head>
+
+<body class="container">
+
+  <nav role="navigation" class="navigation">
+    <div class="row">
+      <ul>
+        <li><a href="/" class="login">Outkept</a></li>
+      </ul>
+
+      <ul class="nav pull-right" style="float: right">
+        <li class="">
+          <a href="/" class="anchorLink">Home</a>
+        </li>
+        <li class="">
+          <a href="/" class="anchorLink">Installation</a>
+        </li>
+        <li class="active">
+          <a href="/documentation" class="anchorLink">Documentation</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="row">
+
+    <aside class="tableofcontents threecol" role="complementary">
+      <h2>Table of contents</h2>
+      <div id="tocc">
+<ul class="vertical-tabs">
+  <li class="tree">
+    <div class="page-details">
+      <a href="/documentation/about" class="title">About</a>
+    </div>
+  </li><li class="tree">
+    <div class="page-details">
+      <a href="/documentation/about/architecture.html" class="title">Architecture</a>
+    </div>
+  </li><li class="tree">
+    <div class="page-details">
+      <a href="/documentation/about/how.html" class="title">Instructions</a>
+    </div>
+  </li>
+</ul><ul class="vertical-tabs">
+  <li class="tree">
+    <div class="page-details">
+      <a href="/documentation/configuration" class="title">Configuration</a>
+    </div>
+  </li><li class="tree">
+    <div class="page-details">
+      <a href="/documentation/configuration/feeds.html" class="title">Feeds</a>
+    </div>
+  </li><li class="tree">
+    <div class="page-details">
+      <a href="/documentation/configuration/sensors.html" class="title">Sensors</a>
+    </div>
+  </li><li class="tree">
+    <div class="page-details">
+      <a href="/documentation/configuration/system.html" class="title">System</a>
+    </div>
+  </li>
+</ul></div>
+    </aside>
+    <div class="full-height threecol"></div>
+
+    
+    <div class="content eightcol" role="main">
+      <article id="content" class="tab-content intro"><div>
+  <div class="page-details">
+    <h1 class="title">Instructions</h1>
+  </div>
+  <div class="content"><p><hr></p>
+<h2>Installation</h2>
+<ul>
+<li>git clone <a href="https://github.com/apocas/outkept">https://github.com/apocas/outkept</a></li>
+<li>npm install</li>
+<li>Ajust conf/*.js files according to your needs. Instructions <a href="configuration">here</a>.</li>
+<li>node main.js</li>
+</ul>
+<p>Installation is pretty simple, configuration is a bit more demanding. Follow the instructions and <code>Outkept</code> will be your best friend for all those repeating tasks you are always doing when something happens in your cluster.</p>
+<p><hr></p>
+<h2>Dependencies</h2>
+<p>You only have to attend to the global dependencies, npm awesomeness will take care of the rest.</p>
+<h3>Global</h3>
+<ul>
+<li>Git (or just curl/wget zip from Github)</li>
+<li>Node</li>
+<li>Redis</li>
+</ul>
+<h3>node.js (<code>npm install</code> will take care of this for you)</h3>
+<ul>
+<li>ssh2 - module used for all SSH communications with all servers.</li>
+<li>emailjs - email module.</li>
+<li>lynx - Statsd module.</li>
+<li>ntwitter - Twitter API implementation.</li>
+<li>express - Web framework.</li>
+<li>hiredis - Redis communication.</li>
+<li>redis - Redis communication.</li>
+<li>feedparser - RSS feed parser.</li>
+<li>request - HTTP request.</li>
+<li>forever-monitor - Process state control.</li>
+<li>optimist - Option parsing.</li>
+<li>reconnect - Reconncetion control between browser and server.</li>
+<li>shoe - WebSocket emulation.</li>
+<li>duplex-emitter - Two way event stream.</li>
+</ul>
+</div>
+</div></article>
+    </div>
+    <!-- content -->
+  </div>
+  <!-- row -->
+
+  <footer role="contentinfo" class="copyright">
+  </footer>
+
+</body>
+</html>

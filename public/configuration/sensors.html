@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<head>
+  <base href="http://outke.pt/documentation/" target="_blank">
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta charset="utf-8">
+
+  <title>Outkept</title>
+
+  <meta name="description" content="Outkept" />
+  <meta name="author" content="Outkept" />
+  <meta name="viewport" content="width=device-width" />
+
+  <link rel="stylesheet" href="css/base.dev.css">
+  <link rel="stylesheet" href="css/github.min.css">
+  <link rel="stylesheet" href="css/custom.css">
+  <link rel="icon" type="image/png" href="img/favicon.ico">  
+
+  <script src="js/highlight.min.js"></script>
+  <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.3.min.js"></script>
+  <script src="js/slugify.js"></script>
+  <script>
+    hljs.tabReplace = '    ';
+    hljs.initHighlightingOnLoad();
+  </script>
+
+</head>
+
+<body class="container">
+
+  <nav role="navigation" class="navigation">
+    <div class="row">
+      <ul>
+        <li><a href="/" class="login">Outkept</a></li>
+      </ul>
+
+      <ul class="nav pull-right" style="float: right">
+        <li class="">
+          <a href="/" class="anchorLink">Home</a>
+        </li>
+        <li class="">
+          <a href="/" class="anchorLink">Installation</a>
+        </li>
+        <li class="active">
+          <a href="/documentation" class="anchorLink">Documentation</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="row">
+
+    <aside class="tableofcontents threecol" role="complementary">
+      <h2>Table of contents</h2>
+      <div id="tocc">
+<ul class="vertical-tabs">
+  <li class="tree">
+    <div class="page-details">
+      <a href="/documentation/about" class="title">About</a>
+    </div>
+  </li><li class="tree">
+    <div class="page-details">
+      <a href="/documentation/about/architecture.html" class="title">Architecture</a>
+    </div>
+  </li><li class="tree">
+    <div class="page-details">
+      <a href="/documentation/about/how.html" class="title">Instructions</a>
+    </div>
+  </li>
+</ul><ul class="vertical-tabs">
+  <li class="tree">
+    <div class="page-details">
+      <a href="/documentation/configuration" class="title">Configuration</a>
+    </div>
+  </li><li class="tree">
+    <div class="page-details">
+      <a href="/documentation/configuration/feeds.html" class="title">Feeds</a>
+    </div>
+  </li><li class="tree">
+    <div class="page-details">
+      <a href="/documentation/configuration/sensors.html" class="title">Sensors</a>
+    </div>
+  </li><li class="tree">
+    <div class="page-details">
+      <a href="/documentation/configuration/system.html" class="title">System</a>
+    </div>
+  </li>
+</ul></div>
+    </aside>
+    <div class="full-height threecol"></div>
+
+    
+    <div class="content eightcol" role="main">
+      <article id="content" class="tab-content intro"><div>
+  <div class="page-details">
+    <h1 class="title">Sensors</h1>
+  </div>
+  <div class="content"><hr>
+
+<p>In <code>Outkept</code> you dont need to specify which sensors each server supports, <code>Outkept</code> automatically does that for you using the <code>verifier</code> field. Instead you specify a library of sensors, which then will be used by the system.</p>
+<hr>
+
+<h2>Sensor definition</h2>
+<p>Each <code>sensor</code> is defined in the <code>sensors.js</code> file in the JSON format.</p>
+<h3>Floating point sensor</h3>
+<pre><code class="lang-js">  {
+    <span class="string">'name'</span>: <span class="string">'load'</span>, <span class="comment">//sensor name</span>
+    <span class="string">'alarm'</span>: <span class="number">8</span>, <span class="comment">//alarm threshold</span>
+    <span class="string">'warning'</span>: <span class="number">6</span>, <span class="comment">//warning threshold</span>
+    <span class="string">'exported'</span>: <span class="literal">true</span>, <span class="comment">//exported to dashboard</span>
+    <span class="string">'cmd'</span>: <span class="string">'uptime | awk -F \'load average:\' \'{ print $2 }\' | awk -F \\, \'{ print $1 }\''</span>, <span class="comment">//sensor command</span>
+    <span class="string">'reactive'</span>: <span class="string">''</span>, <span class="comment">//counter command ran when alarm value is reached</span>
+    <span class="string">'verifier'</span>: <span class="string">''</span>, <span class="comment">//yes/no command that specifies if sensor is available</span>
+    <span class="string">'inverted'</span>: <span class="literal">false</span>, <span class="comment">//inverted</span>
+    <span class="string">'zero'</span>: <span class="literal">false</span>, <span class="comment">//zero triggers or not</span>
+    <span class="string">'timer'</span>: <span class="number">3600000</span> <span class="comment">//interval pooling (milli)</span>
+  }</code></pre>
+<h3>String sensor</h3>
+<p>If you omit the <code>warning</code> and <code>alarm</code> field, sensor will be defined as string.</p>
+<pre><code class="lang-js">  {
+    <span class="string">'name'</span>: <span class="string">'kernel'</span>,
+    <span class="string">'exported'</span>: <span class="literal">true</span>,
+    <span class="string">'cmd'</span>: <span class="string">'uname -r | awk -F. \'{ printf("%d.%d.%d",$1,$2,$3); }\''</span>,
+    <span class="string">'verifier'</span>: <span class="string">'if which uname &gt;/dev/null; then echo yes; else echo no; fi;'</span>,
+    <span class="string">'timer'</span>: <span class="number">60000</span>
+  }</code></pre>
+<ul>
+<li><code>cmd</code> - Command that is run with <code>timer</code> interval, this command returns the sensor value.</li>
+<li><code>reactive</code> - Command that is run when the sensor reaches the <code>alarm</code> value.</li>
+<li><code>verifier</code> - This command must return <code>yes</code> or <code>no</code> strings, if positive this sensor is added to the server where it was ran.</li>
+<li><code>zero</code> - If <code>true</code> then zero will put the sensor in alarm state. (ex. daemon not running)</li>
+<li><code>timer</code> - Pooling interval in milliseconds, in each tick <code>cmd</code> is sent to the server.</li>
+</ul>
+<p><hr></p>
+<h2>Sensors (<code>sensors.js</code>) file</h2>
+<p><code>sensors.js</code> is where sensors are defined, this file must exists in <code>conf</code> folder.</p>
+<p>Bellow are a few examples for sensors.</p>
+<pre><code class="lang-js">module.exports = [
+  {
+    <span class="string">'name'</span>: <span class="string">'load'</span>, <span class="comment">//sensor name</span>
+    <span class="string">'alarm'</span>: <span class="number">8</span>, <span class="comment">//alarm threshold</span>
+    <span class="string">'warning'</span>: <span class="number">6</span>, <span class="comment">//warning threshold</span>
+    <span class="string">'exported'</span>: <span class="literal">true</span>,
+    <span class="string">'cmd'</span>: <span class="string">'uptime | awk -F \'load average:\' \'{ print $2 }\' | awk -F \\, \'{ print $1 }\''</span>, <span class="comment">//sensor command</span>
+    <span class="string">'reactive'</span>: <span class="string">''</span>, <span class="comment">//counter command ran when alarm value is reached</span>
+    <span class="string">'verifier'</span>: <span class="string">''</span>, <span class="comment">//yes/no command that specifies if sensor is available</span>
+    <span class="string">'inverted'</span>: <span class="literal">false</span>, <span class="comment">//inverted</span>
+    <span class="string">'zero'</span>: <span class="literal">false</span> <span class="comment">//zero triggers or not</span>
+  },
+  {
+    <span class="string">'name'</span>: <span class="string">'users'</span>,
+    <span class="string">'alarm'</span>: <span class="number">25</span>,
+    <span class="string">'warning'</span>: <span class="number">20</span>,
+    <span class="string">'exported'</span>: <span class="literal">true</span>,
+    <span class="string">'cmd'</span>: <span class="string">'w | grep -v load | grep -v USER | wc -l;'</span>,
+    <span class="string">'reactive'</span>: <span class="string">''</span>,
+    <span class="string">'verifier'</span>: <span class="string">''</span>,
+    <span class="string">'inverted'</span>: <span class="literal">false</span>,
+    <span class="string">'zero'</span>: <span class="literal">false</span>
+  },
+  {
+    <span class="string">'name'</span>: <span class="string">'apache'</span>,
+    <span class="string">'alarm'</span>: <span class="number">390</span>,
+    <span class="string">'warning'</span>: <span class="number">250</span>,
+    <span class="string">'exported'</span>: <span class="literal">true</span>,
+    <span class="string">'cmd'</span>: <span class="string">'ps aux | grep httpd | grep -v grep | wc -l'</span>,
+    <span class="string">'reactive'</span>: <span class="string">'killall httpd php; sleep 3; killall httpd php; sleep 3; service httpd start;'</span>,
+    <span class="string">'verifier'</span>: <span class="string">'if which httpd &gt;/dev/null; then echo yes; else echo no; fi;'</span>,
+    <span class="string">'inverted'</span>: <span class="literal">false</span>,
+    <span class="string">'zero'</span>: <span class="literal">false</span>
+  },
+  {
+    <span class="string">'name'</span>: <span class="string">'mysql'</span>,
+    <span class="string">'alarm'</span>: <span class="number">65</span>,
+    <span class="string">'warning'</span>: <span class="number">30</span>,
+    <span class="string">'exported'</span>: <span class="literal">true</span>,
+    <span class="string">'cmd'</span>: <span class="string">'mysqladmin process 2&gt; /dev/null | grep localhost | grep -v Sleep | grep -v Delayed | wc -l'</span>,
+    <span class="string">'reactive'</span>: <span class="string">'killall httpd php; sleep 1; service httpd start;'</span>,
+    <span class="string">'verifier'</span>: <span class="string">'if [ -f ~/.my.cnf ]; then echo yes; else echo no; fi;'</span>,
+    <span class="string">'inverted'</span>: <span class="literal">false</span>,
+    <span class="string">'zero'</span>: <span class="literal">true</span>
+  },
+  {
+    <span class="string">'name'</span>: <span class="string">'exim'</span>,
+    <span class="string">'alarm'</span>: <span class="number">600</span>,
+    <span class="string">'warning'</span>: <span class="number">500</span>,
+    <span class="string">'exported'</span>: <span class="literal">true</span>,
+    <span class="string">'cmd'</span>: <span class="string">'exim -bpc'</span>,
+    <span class="string">'reactive'</span>: <span class="string">'exim -bpru | awk {\'print $3\'} | xargs exim -Mrm 2&gt; /dev/null'</span>,
+    <span class="string">'verifier'</span>: <span class="string">'if which exim &gt;/dev/null; then echo yes; else echo no; fi;'</span>,
+    <span class="string">'inverted'</span>: <span class="literal">false</span>,
+    <span class="string">'zero'</span>: <span class="literal">false</span>,
+    <span class="string">'timer'</span>: <span class="number">60000</span> <span class="comment">//sensor specific timer (millis)</span>
+  },
+  {
+    <span class="string">'name'</span>: <span class="string">'memory'</span>,
+    <span class="string">'alarm'</span>: <span class="number">10</span>,
+    <span class="string">'warning'</span>: <span class="number">70</span>,
+    <span class="string">'exported'</span>: <span class="literal">true</span>,
+    <span class="string">'cmd'</span>: <span class="string">'free -m | grep \'-\' | awk \'{print $4}\''</span>,
+    <span class="string">'reactive'</span>: <span class="string">''</span>,
+    <span class="string">'verifier'</span>: <span class="string">''</span>,
+    <span class="string">'inverted'</span>: <span class="literal">true</span>,
+    <span class="string">'zero'</span>: <span class="literal">false</span>
+  },
+  {
+    <span class="string">'name'</span>: <span class="string">'tmp'</span>,
+    <span class="string">'alarm'</span>: <span class="number">85</span>,
+    <span class="string">'warning'</span>: <span class="number">80</span>,
+    <span class="string">'exported'</span>: <span class="literal">true</span>,
+    <span class="string">'cmd'</span>: <span class="string">'aux=$(df -h | grep /tmp | awk \'{print $5}\'); echo ${aux%\\%}'</span>,
+    <span class="string">'reactive'</span>: <span class="string">'rm -rf /tmp/eaccelerator; rm -vf /tmp/cache_*; rm -vf /tmp/*.dat; rm -vf /tmp/*.cache;'</span>,
+    <span class="string">'verifier'</span>: <span class="string">'aux=$(df -h | grep /tmp | awk \'{ print $6 }\';); if [ -z "$aux" ]; then echo no; else echo yes; fi;'</span>,
+    <span class="string">'inverted'</span>: <span class="literal">false</span>,
+    <span class="string">'zero'</span>: <span class="literal">false</span>,
+    <span class="string">'timer'</span>: <span class="number">120000</span>
+  },
+  {
+    <span class="string">'name'</span>: <span class="string">'raid_lsi'</span>,
+    <span class="string">'alarm'</span>: <span class="number">1</span>,
+    <span class="string">'warning'</span>: <span class="number">1</span>,
+    <span class="string">'exported'</span>: <span class="literal">true</span>,
+    <span class="string">'cmd'</span>: <span class="string">'/usr/sbin/megasasctl | grep -i degraded | wc -l'</span>,
+    <span class="string">'reactive'</span>: <span class="string">''</span>,
+    <span class="string">'verifier'</span>: <span class="string">'if [ -f /usr/sbin/megasasctl ]; then echo yes; else echo no; fi;'</span>,
+    <span class="string">'inverted'</span>: <span class="literal">false</span>,
+    <span class="string">'zero'</span>: <span class="literal">true</span>,
+    <span class="string">'timer'</span>: <span class="number">3600000</span>
+  }
+];</code></pre>
+</div>
+</div></article>
+    </div>
+    <!-- content -->
+  </div>
+  <!-- row -->
+
+  <footer role="contentinfo" class="copyright">
+  </footer>
+
+</body>
+</html>
