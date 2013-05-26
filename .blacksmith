@@ -1,0 +1,31 @@
+{
+  "pages": {
+    "index": {
+      "partial": "article",
+      "partials": {
+        "toc": {
+          "partial": "topic",
+          "tree": "article",
+          "truncate": true,
+          "sort": [
+            "about",
+            "configuration"
+          ]
+        }
+      }
+    },
+    "article": {
+      "partials": {
+        "toc": {
+          "partial": "topic",
+          "tree": "article",
+          "truncate": true,
+          "sort": [
+            "about",
+            "configuration"
+          ]
+        }
+      }
+    }
+  }  
+}
